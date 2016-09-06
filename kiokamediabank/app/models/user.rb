@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   before_save -> { skip_confirmation! }
 
+  belongs_to :role
+  has_many :sales
+  has_one :cart
+  has_one :wishlist
+
   def skip_confirmation!
     self.confirmed_at = Time.now
   end
