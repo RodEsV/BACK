@@ -15,6 +15,12 @@ Rails.application.routes.draw do
         resources :products do
           resources :subproducts
         end
+        resources :carts
+        resources :tags
+        resources :types
+        resources :categories
+        resources :wishlists
+        resources :roles
       end
     end
 
