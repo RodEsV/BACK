@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+    namespace :api, defaults: {format: 'json'} do
+      namespace :v1 do
+        resources :users, :only => [:show, :index]
+        resources :comments_api, :only => [:show, :index]
+        resources :tags_api, :only => [:show, :index]
+        resources :posts_api, :only => [:show, :index]
+      end
+
+
+    end
     default_url_options :host => "localhost:3000"
 
     get 'welcome/index'
