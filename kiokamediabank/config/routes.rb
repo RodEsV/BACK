@@ -1,31 +1,25 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for "User", at: 'auth'
-    namespace :api, defaults: {format: 'json'} do
-      namespace :v1 do
-        resources :users, :only => [:show, :index]
-        resources :comments_api, :only => [:show, :index]
-        resources :tags_api, :only => [:show, :index]
-        resources :posts_api, :only => [:show, :index]
-      end
-
-
-    end
-    default_url_options :host => "localhost:3000"
-
     get 'welcome/index'
-    root'welcome#index'
-
+    root 'welcome#index'
     # standard devise routes available at /users
     # NOTE: make sure this comes first!!!
     devise_for :users
 
     # token auth routes available at /api/v1/auth
-    namespace :api do
-      scope :v1 do
-        mount_devise_token_auth_for 'User', at: 'auth'
+    namespace :api, defaults: {format: :json} do
+      namespace :v1 do
+        #mount_devise_token_auth_for 'User', at: 'auth'
         resources :products do
           resources :subproducts
         end
+        resources :users, :only => [:show, :index] do
+          collection do
+            post 'login', to: :login
+          end
+        end
+        resources :comments_api, :only => [:show, :index]
+        resources :tags_api, :only => [:show, :index]
+        resources :posts_api, :only => [:show, :index]
         resources :carts
         resources :tags
         resources :types
