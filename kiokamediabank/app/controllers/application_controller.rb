@@ -4,9 +4,14 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:provider,:name,:role])
-  end
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password) }
+    end
+
+#  protected
+#  def configure_permitted_parameters
+#    devise_parameter_sanitizer.permit(:sign_up, keys: [:provider,:name,:password])
+#  end
 
 #  def authenticate_user!(*args)
 #    current_user.present? || super(*args)

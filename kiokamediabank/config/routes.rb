@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     # token auth routes available at /api/v1/auth
     namespace :api, defaults: {format: :json} do
       namespace :v1 do
-        #mount_devise_token_auth_for 'User', at: 'auth'
+        mount_devise_token_auth_for 'User', at: 'auth'
         resources :products do
           resources :subproducts
         end
