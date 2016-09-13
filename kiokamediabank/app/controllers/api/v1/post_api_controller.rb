@@ -1,2 +1,0 @@
-class PostApiController < ApplicationController
-end
