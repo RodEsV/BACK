@@ -1,5 +1,5 @@
 class Api::V1::ApiController < ApplicationController
-  protect_from_forgery with :null_session, prepend :true
+  protect_from_forgery with :null_session#, prepend :true
   before_action :authenticate_user_from_token!, only:[:create, :update, :destroy]
 
   private
