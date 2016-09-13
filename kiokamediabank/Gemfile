@@ -47,3 +47,11 @@ gem 'devise_token_auth' # Token based authentication for Rails JSON APIs
 gem 'omniauth' # required for devise_token_auth
 
 gem 'actionmailer'
+
+#API gem
+
+gem 'active_model_serializers'
+
+gem 'will_paginate'
+
+gem 'rack-cors'
