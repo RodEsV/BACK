@@ -2,11 +2,22 @@ class ApplicationController < ActionController::Base
   include DeviseTokenAuth::Concerns::SetUserByToken
   protect_from_forgery with: :null_session
   before_action :configure_permitted_parameters, if: :devise_controller?
+  helper_method :current_order
 
   protected
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:provider,:name,:password])
   end
+
+  def current_order
+   if !session[:order_id].nil?
+     Order.find(session[:order_id])
+   else
+     Order.new
+   end
+ end
+
+
 
 #  def authenticate_user!(*args)
 #    current_user.present? || super(*args)

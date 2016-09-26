@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
   validates :email, :uniqueness => true
   #validates :role, :inclusion => roles.keys
 
+#  def cart_count
+#    $redis.scard "cart#{id}"
+#  end
+
   def skip_confirmation!
     self.confirmed_at = Time.now
   end

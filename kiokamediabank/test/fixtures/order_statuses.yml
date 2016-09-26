@@ -2,12 +2,6 @@
 
 one:
   name: MyString
-  image_link: MyString
-  price: 9.99
-  active: false
 
 two:
   name: MyString
-  image_link: MyString
-  price: 9.99
-  active: false

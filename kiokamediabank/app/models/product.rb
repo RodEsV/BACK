@@ -1,6 +1,5 @@
 class Product < ApplicationRecord
-  has_many :subproducts
-  belongs_to :type
-  has_and_belongs_to_many :tags
-  belongs_to :category
+  has_many :order_items
+
+  default_scope { where(active: true) }
 end
