@@ -5,7 +5,7 @@
 
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :nombre %><br />
     <%= f.text_field :name, autofocus: true %>
   </div>
 
@@ -15,20 +15,20 @@
   </div>
 
   <div class="field">
-    <%= f.label :password %>
+    <%= f.label :contraseña %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(Mínimo <%= @minimum_password_length %>  caracteres)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "off" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :Ingrese_el_password_nuevamente %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Registrarse" %>
   </div>
 <% end %>
 
