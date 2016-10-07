@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         resources :categories
         resources :wishlists
         resources :roles
+        resources :sales
       end
     end
 

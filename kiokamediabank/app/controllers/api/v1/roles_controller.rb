@@ -1,4 +1,4 @@
-class Api::V1::SalesController < ApplicationController
+class Api::V1::RolesController < ApplicationController
   respond_to :json
   before_action :set_role, only: [:show, :edit, :update, :destroy]
   # before_action :isAdmin, only:[:create,:update,:destroy]
