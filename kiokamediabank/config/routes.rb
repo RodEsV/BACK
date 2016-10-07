@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-    get 'welcome/index'
-    root 'welcome#index'
+  get 'welcome/index'
+  root 'welcome#index'
     # standard devise routes available at /users
     # NOTE: make sure this comes first!!!
     devise_for :users
