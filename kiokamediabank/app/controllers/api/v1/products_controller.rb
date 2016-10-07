@@ -26,13 +26,13 @@ class Api::V1::ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(params.permit(:name, :image_link))
-
-    if @product.save
-      render :show, status: :created, location: @product
-    else
-      render json: @product.errors, status: :unprocessable_entity
-    end
+    my_type = Type.find_by_id(params[:type])
+    my_category = Category.find_by_id(params[:category])
+    respond_with :api, :v1, Product.create(name: params[:name],
+                            image_link: params[:image_link],
+                            type: my_type,
+                            category: my_category,
+                            updated_at: Time.now)
   end
 
   # PATCH/PUT /products/1
