@@ -1,5 +1,5 @@
 class CartSerializer < ActiveModel::Serializer
-  attributes :date
-  has_many :subproducts
+  attributes :date, :id
+  has_many :cart_subproducts
   belongs_to :user
 end

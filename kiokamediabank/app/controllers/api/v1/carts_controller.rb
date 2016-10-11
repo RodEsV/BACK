@@ -1,6 +1,7 @@
 class Api::V1::CartsController < ApplicationController
   respond_to :json
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy, :add, :remove]
+
   # before_action :isAdmin, only:[:create,:update,:destroy]
 
   # GET /roles
@@ -28,9 +29,7 @@ class Api::V1::CartsController < ApplicationController
   # POST /roles.json
   def create
     my_user = User.find_by_id(params[:user])
-    my_subproduct = Subproduct.find_by_id(params[:subproduct])
     @cart = Cart.new(date: params[:date], user: my_user, updated_at: Time.now)
-    @cart.subproducts << my_subproduct
     @cart.save
     respond_with :api, :v1, @cart
   end
@@ -38,8 +37,48 @@ class Api::V1::CartsController < ApplicationController
   # PATCH/PUT /roles/1
   # PATCH/PUT /roles/1.json
   def update
-    @cart.subproducts << Subproduct.find_by_id(params[:subproduct])
-    if @cart.save
+    if @cart.update(cart_params)
+      render json: @cart
+    else
+      render json: @cart.errors, status: :unprocessable_entity
+    end
+  end
+
+
+  # PATCH/PUT /roles/1
+  # PATCH/PUT /roles/1.json
+  def add
+    my_subproduct = Subproduct.find_by_id(params[:subproduct])
+    if @cart.subproducts.include? my_subproduct
+      init_cart_sub(@cart, my_subproduct)
+      @cart_subproduct.increment(:quantity, 1)
+    else
+      init_cart_sub(@cart, my_subproduct)
+      add_a_subproduct(my_subproduct)
+      init_cart_sub(@cart, my_subproduct)
+      @cart_subproduct.increment(:quantity, 1)
+      # @cart_subproduct = CartSubproduct.create(quantity: 1, cart: @cart, subproduct: my_subproduct)
+    end
+
+    if @cart.save && @cart_subproduct.save
+      render json: @cart
+    else
+      render json: @cart.errors, status: :unprocessable_entity
+    end
+  end
+
+  def remove
+    my_subproduct = Subproduct.find_by_id(params[:subproduct])
+    if @cart.subproducts.include? my_subproduct
+      init_cart_sub(@cart, my_subproduct)
+      if @cart_subproduct.quantity >= 1
+        @cart_subproduct.update_attribute(:quantity, @cart_subproduct.quantity - 1)
+      else
+        render json: @cart.errors, status: :unprocessable_entity
+      end
+    end
+
+    if @cart.save && @cart_subproduct.save
       render json: @cart
     else
       render json: @cart.errors, status: :unprocessable_entity
@@ -64,5 +103,16 @@ class Api::V1::CartsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def cart_params
       params.permit(:name)
+    end
+
+    def init_cart_sub(cart, subproduct)
+      @cart_subproduct = CartSubproduct.find_by(cart: cart, subproduct: subproduct)
+    end
+
+    def add_a_subproduct(subproduct)
+      @cart.subproducts << subproduct
+      if !@cart.save
+        render json: @cart.errors, status: :unprocessable_entity
+      end
     end
 end

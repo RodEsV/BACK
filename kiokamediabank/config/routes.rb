@@ -20,7 +20,10 @@ Rails.application.routes.draw do
         resources :comments_api, :only => [:show, :index]
         resources :tags_api, :only => [:show, :index]
         resources :posts_api, :only => [:show, :index]
-        resources :carts
+        resources :carts do
+          put :add, on: :member
+          put :remove, on: :member
+        end
         resources :tags
         resources :types
         resources :categories
