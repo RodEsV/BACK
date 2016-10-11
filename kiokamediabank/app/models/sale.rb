@@ -1,4 +1,5 @@
 class Sale < ApplicationRecord
   belongs_to :user
-  has_and_belongs_to_many :subproducts
+  has_many :sale_subproducts
+  has_many :subproducts, through: :sale_subproducts
 end

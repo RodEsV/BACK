@@ -8,6 +8,14 @@ class Cart < ApplicationRecord
     self.date  ||= Time.now
   end
 
+  def compute_price
+    price = 0
+    for subproduct in self.subproducts
+      price = price + subproduct.price
+    end
+    price
+  end
+
   # has_and_belongs_to_many :subproducts,
   # class_name: 'Subproduct',
   # join_table: "carts_subproducts",

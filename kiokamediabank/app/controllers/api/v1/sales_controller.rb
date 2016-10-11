@@ -27,11 +27,13 @@ class Api::V1::SalesController < ApplicationController
   # POST /roles
   # POST /roles.json
   def create
-    my_user = User.find_by_id(params[:user])
-    respond_with :api, :v1, Sale.create(date: params[:date],
-                            price: params[:price],
-                            user: my_user,
-                            updated_at: Time.now)
+    my_cart = Cart.find_by_id(params[:cart])
+    # my_user = User.find_by_id(my_cart.user_id)
+    @sale = Sale.new(date: Time.now, price: my_cart.compute_price,
+                      user: my_cart.user, updated_at: Time.now)
+    @sale.subproducts << my_cart.subproducts
+    @sale.save
+    respond_with :api, :v1, @sale
   end
 
   # PATCH/PUT /roles/1
