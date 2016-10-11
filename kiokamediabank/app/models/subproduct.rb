@@ -7,5 +7,6 @@ class Subproduct < ApplicationRecord
   has_many :sale_subproducts
   has_many :sales, through: :sale_subproducts
 
-  has_and_belongs_to_many :wishlists
+  has_many :whishlist_subproducts
+  has_many :whishlists, through: :whishlist_subproducts
 end

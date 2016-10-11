@@ -28,11 +28,17 @@ class Api::V1::SalesController < ApplicationController
   # POST /roles.json
   def create
     my_cart = Cart.find_by_id(params[:cart])
-    # my_user = User.find_by_id(my_cart.user_id)
     @sale = Sale.new(date: Time.now, price: my_cart.compute_price,
                       user: my_cart.user, updated_at: Time.now)
     @sale.subproducts << my_cart.subproducts
     @sale.save
+
+    for subproduct in @sale.subproducts
+      cart_subproduct = CartSubproduct.find_by(cart: my_cart, subproduct: subproduct)
+      sale_subproduct = SaleSubproduct.find_by(sale: @sale, subproduct: subproduct)
+      sale_subproduct.quantity = cart_subproduct.quantity
+      sale_subproduct.save
+    end
     respond_with :api, :v1, @sale
   end
 

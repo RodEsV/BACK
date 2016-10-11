@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011022400) do
+ActiveRecord::Schema.define(version: 20161011134905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20161011022400) do
   create_table "sales_subproducts", force: :cascade do |t|
     t.integer "sale_id"
     t.integer "subproduct_id"
+    t.integer "quantity"
   end
 
   create_table "subproducts", force: :cascade do |t|
@@ -115,9 +116,15 @@ ActiveRecord::Schema.define(version: 20161011022400) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
-  create_table "wishlists", force: :cascade do |t|
+  create_table "whishlists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "whishlists_subproducts", force: :cascade do |t|
+    t.integer "whishlist_id"
+    t.integer "subproduct_id"
+    t.integer "quantity"
   end
 
   add_foreign_key "products", "categories"

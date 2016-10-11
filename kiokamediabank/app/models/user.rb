@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules.
-  before_create :generate_authentication_token!, :build_default_cart
+  before_create :generate_authentication_token!, :build_default_cart,
+                :build_default_whishlist
 
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable, :validatable,
@@ -13,7 +14,7 @@ class User < ActiveRecord::Base
   #belongs_to :role
   has_many :sales
   has_one :cart
-  has_one :wishlist
+  has_one :whishlist
 
   validates :auth_token, uniqueness: true
   validates :name, :email, :presence => true
@@ -33,6 +34,11 @@ class User < ActiveRecord::Base
   private
     def build_default_cart
       build_cart
+      true
+    end
+
+    def build_default_whishlist
+      build_whishlist
       true
     end
 
