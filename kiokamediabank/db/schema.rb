@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011134905) do
+ActiveRecord::Schema.define(version: 20161012192908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "carts", force: :cascade do |t|
-    t.date     "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
@@ -52,7 +51,6 @@ ActiveRecord::Schema.define(version: 20161011134905) do
   end
 
   create_table "sales", force: :cascade do |t|
-    t.date     "date"
     t.float    "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -119,6 +117,7 @@ ActiveRecord::Schema.define(version: 20161011134905) do
   create_table "whishlists", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   create_table "whishlists_subproducts", force: :cascade do |t|

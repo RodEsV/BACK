@@ -27,7 +27,10 @@ Rails.application.routes.draw do
         resources :tags
         resources :types
         resources :categories
-        resources :wishlists
+        resources :whishlists do
+          put :add, on: :member
+          put :remove, on: :member
+        end
         resources :roles
         resources :sales
       end

@@ -1,4 +1,4 @@
-class Api::V1::whishlistsController < ApplicationController
+class Api::V1::WhishlistsController < ApplicationController
   respond_to :json
   before_action :set_whishlist, only: [:show, :edit, :update, :destroy, :add, :remove]
 
@@ -29,7 +29,7 @@ class Api::V1::whishlistsController < ApplicationController
   # POST /roles.json
   def create
     my_user = User.find_by_id(params[:user])
-    @whishlist = Whishlist.new(date: params[:date], user: my_user, updated_at: Time.now)
+    @whishlist = Whishlist.new(user: my_user, updated_at: Time.now)
     @whishlist.save
     respond_with :api, :v1, @whishlist
   end
@@ -106,7 +106,7 @@ class Api::V1::whishlistsController < ApplicationController
     end
 
     def init_whishlist_sub(whishlist, subproduct)
-      @whishlist_subproduct = whishlistsubproduct.find_by(whishlist: whishlist, subproduct: subproduct)
+      @whishlist_subproduct = WhishlistSubproduct.find_by(whishlist: whishlist, subproduct: subproduct)
     end
 
     def add_a_subproduct(subproduct)
