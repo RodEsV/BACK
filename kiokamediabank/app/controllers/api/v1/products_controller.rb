@@ -1,6 +1,7 @@
 class Api::V1::ProductsController < ApplicationController
   respond_to :json
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy,
+                                     :add_tag, :remove_tag]
 
   # GET /products
   # GET /products.json
@@ -41,6 +42,32 @@ class Api::V1::ProductsController < ApplicationController
     @product = Product.find(params[:id])
     if @product.update(product_params)
       render :show, status: :ok, location: @product
+    else
+      render json: @product.errors, status: :unprocessable_entity
+    end
+  end
+
+  def add_tag
+    my_tag = Tag.find_by_id(params[:tag])
+    if !@product.tags.include? my_tag
+      @product.tags << my_tag
+    end
+
+    if @product.save
+      render json: @product
+    else
+      render json: @product.errors, status: :unprocessable_entity
+    end
+  end
+
+  def remove_tag
+    my_tag = Tag.find_by_id(params[:tag])
+    if @product.tags.include? my_tag
+      @product.tags.destroy(my_tag)
+    end
+
+    if @product.save
+      render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
     end

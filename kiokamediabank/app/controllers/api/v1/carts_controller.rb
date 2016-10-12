@@ -29,7 +29,7 @@ class Api::V1::CartsController < ApplicationController
   # POST /roles.json
   def create
     my_user = User.find_by_id(params[:user])
-    @cart = Cart.new(date: params[:date], user: my_user, updated_at: Time.now)
+    @cart = Cart.new(user: my_user, updated_at: Time.now)
     @cart.save
     respond_with :api, :v1, @cart
   end

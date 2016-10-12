@@ -11,6 +11,8 @@ Rails.application.routes.draw do
         mount_devise_token_auth_for 'User', at: 'auth'
         resources :products do
           resources :subproducts
+          put :add_tag, on: :member
+          put :remove_tag, on: :member
         end
         resources :users, :only => [:show, :index] do
           collection do
@@ -24,7 +26,10 @@ Rails.application.routes.draw do
           put :add, on: :member
           put :remove, on: :member
         end
-        resources :tags
+        resources :tags do
+          put :add, on: :member
+          put :remove, on: :member
+        end
         resources :types
         resources :categories
         resources :whishlists do

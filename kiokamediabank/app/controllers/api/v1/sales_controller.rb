@@ -28,7 +28,7 @@ class Api::V1::SalesController < ApplicationController
   # POST /roles.json
   def create
     my_cart = Cart.find_by_id(params[:cart])
-    @sale = Sale.new(date: Time.now, price: my_cart.compute_price,
+    @sale = Sale.new(price: my_cart.compute_price,
                       user: my_cart.user, updated_at: Time.now)
     @sale.subproducts << my_cart.subproducts
     @sale.save
