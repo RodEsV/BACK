@@ -48,6 +48,7 @@ gem 'pg' # Postgre database
 gem 'devise'
 gem 'devise_token_auth' # Token based authentication for Rails JSON APIs
 gem 'omniauth' # required for devise_token_auth
+gem 'omniauth-facebook'
 
 gem 'actionmailer'
 

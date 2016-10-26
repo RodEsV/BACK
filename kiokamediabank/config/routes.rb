@@ -4,11 +4,15 @@ Rails.application.routes.draw do
     # standard devise routes available at /users
     # NOTE: make sure this comes first!!!
     devise_for :users
+    devise_for :companies
+    devise_for :admins
 
     # token auth routes available at /api/v1/auth
     namespace :api, defaults: {format: :json} do
       namespace :v1 do
         mount_devise_token_auth_for 'User', at: 'auth'
+        mount_devise_token_auth_for 'Admin', at: 'auth_admin'
+        mount_devise_token_auth_for 'Company', at: 'auth_company'
         resources :products do
           resources :subproducts
           put :add_tag, on: :member

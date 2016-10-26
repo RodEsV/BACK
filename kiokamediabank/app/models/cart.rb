@@ -1,5 +1,5 @@
 class Cart < ApplicationRecord
-  belongs_to :user
+  belongs_to :cart_owner, polymorphic: true
   has_many :cart_subproducts
   has_many :subproducts, through: :cart_subproducts
 

@@ -2,6 +2,7 @@ class Api::V1::ProductsController < ApplicationController
   respond_to :json
   before_action :set_product, only: [:show, :edit, :update, :destroy,
                                      :add_tag, :remove_tag]
+  before_action :authenticate_user!, only: [:add_tag, :remove_tag]
 
   # GET /products
   # GET /products.json

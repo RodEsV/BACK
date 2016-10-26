@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class Admin < ActiveRecord::Base
   # Include default devise modules.
   before_create :generate_authentication_token!, :build_default_cart,
                 :build_default_whishlist
