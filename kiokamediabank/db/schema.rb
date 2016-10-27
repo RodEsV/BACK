@@ -10,15 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012195646) do
+ActiveRecord::Schema.define(version: 20161027050646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "admins", force: :cascade do |t|
+    t.string   "provider",               default: "email", null: false
+    t.string   "uid",                    default: "email", null: false
+    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,       null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "image"
+    t.string   "email"
+    t.json     "tokens"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "auth_token",             default: ""
+    t.index ["auth_token"], name: "index_admins_on_auth_token", unique: true, using: :btree
+    t.index ["email"], name: "index_admins_on_email", using: :btree
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+    t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true, using: :btree
+  end
+
   create_table "carts", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "cart_owner_id"
+    t.string   "cart_owner_type"
   end
 
   create_table "carts_subproducts", force: :cascade do |t|
@@ -31,6 +62,36 @@ ActiveRecord::Schema.define(version: 20161012195646) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "provider",               default: "email", null: false
+    t.string   "uid",                    default: "email", null: false
+    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,       null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.string   "company_name"
+    t.string   "company_number"
+    t.string   "image"
+    t.string   "email"
+    t.json     "tokens"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.string   "auth_token",             default: ""
+    t.index ["auth_token"], name: "index_companies_on_auth_token", unique: true, using: :btree
+    t.index ["email"], name: "index_companies_on_email", using: :btree
+    t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true, using: :btree
+    t.index ["uid", "provider"], name: "index_companies_on_uid_and_provider", unique: true, using: :btree
   end
 
   create_table "products", force: :cascade do |t|
@@ -54,7 +115,8 @@ ActiveRecord::Schema.define(version: 20161012195646) do
     t.float    "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.integer  "buyer_id"
+    t.string   "buyer_type"
   end
 
   create_table "sales_subproducts", force: :cascade do |t|
@@ -120,9 +182,10 @@ ActiveRecord::Schema.define(version: 20161012195646) do
   end
 
   create_table "whishlists", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "whishlist_owner_id"
+    t.string   "whishlist_owner_type"
   end
 
   create_table "whishlists_subproducts", force: :cascade do |t|

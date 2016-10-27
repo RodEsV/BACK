@@ -17,7 +17,7 @@ class Admin < ActiveRecord::Base
   has_one :whishlist, as: :whishlist_owner
 
   validates :auth_token, uniqueness: true
-  validates :name, :email, :presence => true
+  # validates :first_name, :email, :presence => true
   validates :email, :uniqueness => true
   #validates :role, :inclusion => roles.keys
 
