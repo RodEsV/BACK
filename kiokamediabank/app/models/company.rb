@@ -12,9 +12,9 @@ class Company < ActiveRecord::Base
   before_save -> { skip_confirmation! }
 
   #belongs_to :role
-  has_many :sales, as :buyer
-  has_one :cart, as :cart_owner
-  has_one :whishlist, as :whishlist_owner
+  has_many :sales, as: :buyer
+  has_one :cart, as: :cart_owner
+  has_one :whishlist, as: :whishlist_owner
 
   validates :auth_token, uniqueness: true
   validates :name, :email, :presence => true

@@ -13,6 +13,15 @@ Rails.application.routes.draw do
         mount_devise_token_auth_for 'User', at: 'auth'
         mount_devise_token_auth_for 'Admin', at: 'auth_admin'
         mount_devise_token_auth_for 'Company', at: 'auth_company'
+
+        # as :company do
+        #   # Define routes for Company within this block.
+        # end
+
+        # as :admin do
+        #   # Define routes for Admin within this block.
+        # end
+
         resources :products do
           resources :subproducts
           put :add_tag, on: :member
