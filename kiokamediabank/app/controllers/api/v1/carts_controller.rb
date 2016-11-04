@@ -1,7 +1,7 @@
 class Api::V1::CartsController < ApplicationController
   respond_to :json
   before_action :set_cart, only: [:show, :edit, :update, :destroy, :add, :remove]
-  before_action :authenticate_user!
+  #before_action :authenticate_user!
   # before_action :isAdmin, only:[:create,:update,:destroy]
 
   # GET /roles
@@ -13,7 +13,7 @@ class Api::V1::CartsController < ApplicationController
   # GET /roles/1
   # GET /roles/1.json
   def show
-    respond_with Cart.find(params[:id])
+    respond_with @cart
   end
 
   # GET /roles/new
@@ -97,7 +97,8 @@ class Api::V1::CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params[:id])
+      my_user = User.find(params[:user_id])
+      @cart = Cart.find_by(cart_owner: my_user)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

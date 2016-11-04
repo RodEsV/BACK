@@ -23,6 +23,10 @@ Rails.application.routes.draw do
           collection do
             post 'login', to: :login
           end
+          get '/cart', to: 'carts#show'
+          get '/add_cart', to: 'carts#add'
+          get '/remove_cart', to: 'carts#remove'
+          resources :carts
         end
         resources :admins, :only => [:show, :index] do
           # collection do
@@ -32,10 +36,6 @@ Rails.application.routes.draw do
         resources :comments_api, :only => [:show, :index]
         resources :tags_api, :only => [:show, :index]
         resources :posts_api, :only => [:show, :index]
-        resources :carts do
-          put :add, on: :member
-          put :remove, on: :member
-        end
         resources :tags do
           put :add, on: :member
           put :remove, on: :member
