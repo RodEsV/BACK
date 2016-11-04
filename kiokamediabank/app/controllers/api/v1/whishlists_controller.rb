@@ -1,7 +1,9 @@
 class Api::V1::WhishlistsController < ApplicationController
   respond_to :json
   before_action :set_whishlist, only: [:show, :edit, :update, :destroy, :add, :remove]
-  before_action :authenticate_user!
+  before_action :authenticate_member!
+  before_action :is_my_whishlist, only: [:show_mine, :add, :remove]
+  before_action :authenticate_admin!, only: [:edit, :update, :destroy]
 
   # before_action :isAdmin, only:[:create,:update,:destroy]
 
@@ -13,10 +15,13 @@ class Api::V1::WhishlistsController < ApplicationController
 
   # GET /roles/1
   # GET /roles/1.json
-  def show
+  def show_mine
     respond_with @whishlist
   end
 
+  def show
+    respond_with Whishlist.find_by_id(params[:id])
+  end
   # GET /roles/new
   def new
     @role = Whishlist.new
@@ -98,8 +103,8 @@ class Api::V1::WhishlistsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_whishlist
-      my_user = User.find(params[:user_id])
-      @whishlist = Whishlist.find_by(whishlist_owner: my_user)
+      @my_user = User.find(params[:user_id])
+      @whishlist = Whishlist.find_by(whishlist_owner: @my_user)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -116,5 +121,12 @@ class Api::V1::WhishlistsController < ApplicationController
       if !@whishlist.save
         render json: @whishlist.errors, status: :unprocessable_entity
       end
+    end
+
+    def is_my_whishlist
+      if current_user != @my_user
+        render json: {"Status": 401, "Message": "No es tu wishlsit, marica!"}, status: :unauthorized
+      end
+
     end
 end

@@ -23,14 +23,14 @@ Rails.application.routes.draw do
           collection do
             post 'login', to: :login
           end
-          get '/cart', to: 'carts#show'
+          get '/cart', to: 'carts#show_mine'
           put '/add_to_cart', to: 'carts#add'
           put '/remove_from_cart', to: 'carts#remove'
           get '/whishlist', to: 'whishlists#show'
           put '/add_to_whishlist', to: 'whishlists#add'
           put '/remove_from_whishlist', to: 'whishlists#remove'
-          resources :carts
-          resources :whishlists
+          resources :carts, :only => [:show, :index]
+          resources :whishlists, :only => [:show, :index]
         end
         resources :admins, :only => [:show, :index] do
           # collection do
