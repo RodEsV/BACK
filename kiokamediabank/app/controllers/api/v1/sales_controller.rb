@@ -1,6 +1,10 @@
 class Api::V1::SalesController < ApplicationController
   respond_to :json
-  before_action :set_sale, only: [:show, :edit, :update, :destroy]
+  before_action :set_variables, only: [:show, :list_mine, @create]
+
+  before_action :authenticate_member!
+  before_action :authenticate_admin!, only: [:index, :update, :destroy]
+
   # before_action :isAdmin, only:[:create,:update,:destroy]
 
   # GET /roles
@@ -9,6 +13,13 @@ class Api::V1::SalesController < ApplicationController
     respond_with Sale.all
   end
 
+  def list_mine
+    if current_member != @user
+      render json: {"Status": 401, "Message": "No son tus ventas, marica!"}, status: :unauthorized
+    end
+
+    respond_with @sales
+  end
   # GET /roles/1
   # GET /roles/1.json
   def show
@@ -27,14 +38,17 @@ class Api::V1::SalesController < ApplicationController
   # POST /roles
   # POST /roles.json
   def create
-    my_cart = Cart.find_by_id(params[:cart])
-    @sale = Sale.new(price: my_cart.compute_price,
-                      user: my_cart.user, updated_at: Time.now)
-    @sale.subproducts << my_cart.subproducts
+    if current_member != @user
+      render json: {"Status": 401, "Message": "No es tu carrito que quieres comprar, marica!"}, status: :unauthorized
+    end
+
+    @sale = Sale.new(price: @cart.compute_price,
+                      user: @cart.user, updated_at: Time.now)
+    @sale.subproducts << @cart.subproducts
     @sale.save
 
     for subproduct in @sale.subproducts
-      cart_subproduct = CartSubproduct.find_by(cart: my_cart, subproduct: subproduct)
+      cart_subproduct = CartSubproduct.find_by(cart: @cart, subproduct: subproduct)
       sale_subproduct = SaleSubproduct.find_by(sale: @sale, subproduct: subproduct)
       sale_subproduct.quantity = cart_subproduct.quantity
       sale_subproduct.save
@@ -64,8 +78,10 @@ class Api::V1::SalesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_sale
-      @sale = Sale.find(params[:id])
+    def set_variables
+      @user = User.find(params[:user_id])
+      @sales = Sale.find_by(buyer: @user)
+      @cart = Cart.find_by(cart_owner: @user)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

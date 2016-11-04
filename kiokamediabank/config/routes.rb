@@ -29,8 +29,10 @@ Rails.application.routes.draw do
           get '/whishlist', to: 'whishlists#show'
           put '/add_to_whishlist', to: 'whishlists#add'
           put '/remove_from_whishlist', to: 'whishlists#remove'
+          post '/buy_cart_content', to: 'sales#create'
           resources :carts, :only => [:show, :index]
           resources :whishlists, :only => [:show, :index]
+          resources :sales, :only => [:show, :index]
         end
         resources :admins, :only => [:show, :index] do
           # collection do
@@ -47,7 +49,6 @@ Rails.application.routes.draw do
         resources :types
         resources :categories
         resources :roles
-        resources :sales
       end
     end
 
