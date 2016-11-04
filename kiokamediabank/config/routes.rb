@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         # as :admin do
         #   # Define routes for Admin within this block.
         # end
+        post '/search', to: 'products#search'
         resources :products do
           resources :subproducts
           put :add_tag, on: :member

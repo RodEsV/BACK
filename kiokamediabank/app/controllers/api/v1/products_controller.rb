@@ -17,6 +17,11 @@ class Api::V1::ProductsController < ApplicationController
     respond_with Product.find(params[:id])
   end
 
+  def search
+    @search_results = Products.where("name REGEXP ?", '.*' + params[:query] + '.*')
+    respond_with @search_results
+  end
+
   # GET /products/new
   def new
     @product = Product.new
