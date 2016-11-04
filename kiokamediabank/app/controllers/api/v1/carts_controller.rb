@@ -1,7 +1,7 @@
 class Api::V1::CartsController < ApplicationController
   respond_to :json
   before_action :set_cart, only: [:show, :edit, :update, :destroy, :add, :remove]
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   # before_action :isAdmin, only:[:create,:update,:destroy]
 
   # GET /roles

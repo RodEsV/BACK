@@ -14,7 +14,7 @@ class Api::V1::WhishlistsController < ApplicationController
   # GET /roles/1
   # GET /roles/1.json
   def show
-    respond_with Whishlist.find(params[:id])
+    respond_with @whishlist
   end
 
   # GET /roles/new
@@ -98,7 +98,8 @@ class Api::V1::WhishlistsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_whishlist
-      @whishlist = Whishlist.find(params[:id])
+      my_user = User.find(params[:user_id])
+      @whishlist = Whishlist.find_by(whishlist_owner: my_user)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
