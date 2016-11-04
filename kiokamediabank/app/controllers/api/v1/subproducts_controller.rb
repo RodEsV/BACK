@@ -1,6 +1,7 @@
 class Api::V1::SubproductsController < ApplicationController
   respond_to :json
   before_action :set_subproduct, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_admin!, only: [:create, :edit, :update, :destroy]
 
   # GET /subproducts
   # GET /subproducts.json
