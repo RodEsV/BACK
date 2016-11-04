@@ -24,8 +24,8 @@ Rails.application.routes.draw do
             post 'login', to: :login
           end
           get '/cart', to: 'carts#show'
-          get '/add_cart', to: 'carts#add'
-          get '/remove_cart', to: 'carts#remove'
+          put '/add_to_cart', to: 'carts#add'
+          put '/remove_from_cart', to: 'carts#remove'
           resources :carts
         end
         resources :admins, :only => [:show, :index] do
