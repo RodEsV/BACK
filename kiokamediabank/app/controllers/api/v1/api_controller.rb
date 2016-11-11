@@ -29,10 +29,9 @@ class Api::V1::ApiController < ApplicationController
   end
 
   def isAdmin
-    byebug
-    uid = request.headers["uid"] || params["uid"]
-    my_user = User.find_by(uid: uid)
-    unless my_user.admin
+    # uid = request.headers["uid"] || params["uid"]
+    # my_user = User.find_by(uid: uid)
+    unless current_user.admin
       return render json: {
           errors: ["Authorized users only."]
       }, status: 401

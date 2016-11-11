@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   end
 
   def isAdmin
-    byebug
     unless current_user.admin
       return render json: {
           errors: ["Authorized users only."]
