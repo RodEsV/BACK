@@ -1,7 +1,7 @@
-class Api::V1::TagsController < ApplicationController
+class Api::V1::TagsController < Api::V1::ApiController
   respond_to :json
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!, only:[:create,:update,:destroy]
+  before_action :isAdmin, only:[:create,:update,:destroy]
 
   # GET /tags
   # GET /tags.json

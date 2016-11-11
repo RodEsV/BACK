@@ -4,22 +4,22 @@ Rails.application.routes.draw do
     # standard devise routes available at /users
     # NOTE: make sure this comes first!!!
     devise_for :users
-    devise_for :admins
 
     # token auth routes available at /api/v1/auth
     namespace :api, defaults: {format: :json} do
       namespace :v1 do
         mount_devise_token_auth_for 'User', at: 'auth'
-        mount_devise_token_auth_for 'Admin', at: 'auth_admin'
-        # as :admin do
-        #   # Define routes for Admin within this block.
-        # end
         post '/search', to: 'products#search'
         resources :products do
           resources :subproducts
           put :add_tag, on: :member
           put :remove_tag, on: :member
         end
+        resources :sales, :only => [:index]
+        resources :tags
+        resources :types
+        resources :categories
+
         resources :users, :only => [:show, :index] do
           collection do
             post 'login', to: :login
@@ -37,22 +37,6 @@ Rails.application.routes.draw do
           get '/sales', to: 'sales#list_mine'
           resources :sales, :only => [:show]
         end
-        resources :sales, :only => [:index]
-        resources :admins, :only => [:show, :index] do
-          # collection do
-          #   post 'login', to: :login
-          # end
-        end
-        resources :comments_api, :only => [:show, :index]
-        resources :tags_api, :only => [:show, :index]
-        resources :posts_api, :only => [:show, :index]
-        resources :tags do
-          put :add, on: :member
-          put :remove, on: :member
-        end
-        resources :types
-        resources :categories
-        resources :roles
       end
     end
 

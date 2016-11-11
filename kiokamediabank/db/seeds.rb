@@ -11,6 +11,7 @@ user1.name = 'Theo Faure'
 user1.image = 'http://www.monchatonetmoi.com/upload/images/chaton-coquin-sur-clavier-d-ordinateur.jpg'
 user1.password = 'coucou'
 user1.password_confirmation = 'coucou'
+user1.admin = true
 user1.save!
 
 user2 = User.new
@@ -20,15 +21,6 @@ user2.image = 'http://ctoc.consostatic.com/images/media/demande/large/000/140/12
 user2.password = 'coucou'
 user2.password_confirmation = 'coucou'
 user2.save!
-
-admin1 = Admin.new
-admin1.email = 'admin1@example.com'
-admin1.first_name = 'John'
-admin1.last_name = 'Doe'
-admin1.image = 'http://www.atlantico.fr/sites/atlantico.fr/files/styles/une/public/images/2014/04/atlantico.fr_grumpy_cat_chat_shanghai.jpg'
-admin1.password = 'coucou'
-admin1.password_confirmation = 'coucou'
-admin1.save!
 
 tags = Tag.create([{ name: 'cat' },
                    { name: 'cute' },

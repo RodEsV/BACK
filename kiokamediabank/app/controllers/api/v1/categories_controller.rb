@@ -1,7 +1,7 @@
-class Api::V1::CategoriesController < ApplicationController
+class Api::V1::CategoriesController < Api::V1::ApiController
   respond_to :json
   before_action :set_category, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_admin!, only:[:create,:update,:destroy]
+  before_action :isAdmin, only:[:create,:update,:destroy]
 
   # GET /categories
   # GET /categories.json

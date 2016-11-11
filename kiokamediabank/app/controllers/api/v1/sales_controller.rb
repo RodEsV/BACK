@@ -1,11 +1,9 @@
-class Api::V1::SalesController < ApplicationController
+class Api::V1::SalesController < Api::V1::ApiController
   respond_to :json
   before_action :set_variables, only: [:show, :list_mine, :create]
 
-  before_action :authenticate_member!
-  before_action :authenticate_admin!, only: [:index, :update, :destroy]
-
-  # before_action :isAdmin, only:[:create,:update,:destroy]
+  before_action :authenticate_user!
+  before_action :isAdmin, only: [:index, :update, :destroy]
 
   # GET /roles
   # GET /roles.json
@@ -14,7 +12,7 @@ class Api::V1::SalesController < ApplicationController
   end
 
   def list_mine
-    if current_member != @user
+    if current_user != @user
       render json: {"Status": 401, "Message": "No son tus ventas, marica!"}, status: :unauthorized
     end
     respond_with @sales
@@ -37,7 +35,7 @@ class Api::V1::SalesController < ApplicationController
   # POST /roles
   # POST /roles.json
   def create
-    if current_member != @user
+    if current_user != @user
       render json: {"Status": 401, "Message": "No es tu carrito que quieres comprar, marica!"}, status: :unauthorized
     end
 

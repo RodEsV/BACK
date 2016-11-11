@@ -1,12 +1,20 @@
 class ApplicationController < ActionController::Base
   include DeviseTokenAuth::Concerns::SetUserByToken
-  devise_token_auth_group :member, contains: [:user, :admin]
-  protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_sessions
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:provider,:name,:password])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:provider,:name,:password,:first_name,:last_name,:image])
+  end
+
+  def isAdmin
+    byebug
+    unless current_user.admin
+      return render json: {
+          errors: ["Authorized users only."]
+      }, status: 401
+    end
   end
 
 #  def authenticate_user!(*args)

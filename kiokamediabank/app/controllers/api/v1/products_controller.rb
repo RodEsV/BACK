@@ -1,8 +1,8 @@
-class Api::V1::ProductsController < ApplicationController
+class Api::V1::ProductsController < Api::V1::ApiController
   respond_to :json
   before_action :set_product, only: [:show, :edit, :update, :destroy,
                                      :add_tag, :remove_tag]
-  before_action :authenticate_admin!, only: [:create, :edit, :destroy,
+  before_action :isAdmin, only: [:create, :edit, :destroy,
                                             :update, :add_tag, :remove_tag]
 
   # GET /products
