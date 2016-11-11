@@ -36,10 +36,12 @@ class Api::V1::ProductsController < Api::V1::ApiController
   def create
     my_type = Type.find_by_id(params[:type])
     my_category = Category.find_by_id(params[:category])
+    my_tags = Tag.find(params[:tag])
     respond_with :api, :v1, Product.create(name: params[:name],
                             image_link: params[:image_link],
                             type: my_type,
                             category: my_category,
+                            tags: my_tags,
                             updated_at: Time.now)
   end
 
