@@ -1,6 +1,6 @@
 class Api::V1::WhishlistsController < ApplicationController
   respond_to :json
-  before_action :set_whishlist, only: [:show, :edit, :update, :destroy, :add, :remove]
+  before_action :set_whishlist, only: [:show, :show_mine, :edit, :update, :destroy, :add, :remove]
   before_action :authenticate_member!
   before_action :is_my_whishlist, only: [:show_mine, :add, :remove]
   before_action :authenticate_admin!, only: [:edit, :update, :destroy]

@@ -1,6 +1,6 @@
 class Api::V1::SalesController < ApplicationController
   respond_to :json
-  before_action :set_variables, only: [:show, :list_mine, @create]
+  before_action :set_variables, only: [:show, :list_mine, :create]
 
   before_action :authenticate_member!
   before_action :authenticate_admin!, only: [:index, :update, :destroy]
@@ -53,6 +53,9 @@ class Api::V1::SalesController < ApplicationController
       sale_subproduct.quantity = cart_subproduct.quantity
       sale_subproduct.save
     end
+    @cart.subproducts.clear
+    @cart.save
+
     respond_with :api, :v1, @sale
   end
 

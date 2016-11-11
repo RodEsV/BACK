@@ -79,6 +79,9 @@ class Api::V1::CartsController < ApplicationController
       init_cart_sub(@cart, my_subproduct)
       if @cart_subproduct.quantity >= 1
         @cart_subproduct.update_attribute(:quantity, @cart_subproduct.quantity - 1)
+        if @cart_subproduct.quantity == 0
+          @cart.subproducts.destroy(my_subproduct)
+        end
       else
         render json: @cart.errors, status: :unprocessable_entity
       end

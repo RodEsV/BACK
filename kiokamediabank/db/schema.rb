@@ -64,36 +64,6 @@ ActiveRecord::Schema.define(version: 20161027050646) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "companies", force: :cascade do |t|
-    t.string   "provider",               default: "email", null: false
-    t.string   "uid",                    default: "email", null: false
-    t.string   "encrypted_password",     default: "",      null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,       null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.string   "company_name"
-    t.string   "company_number"
-    t.string   "image"
-    t.string   "email"
-    t.json     "tokens"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.string   "auth_token",             default: ""
-    t.index ["auth_token"], name: "index_companies_on_auth_token", unique: true, using: :btree
-    t.index ["email"], name: "index_companies_on_email", using: :btree
-    t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true, using: :btree
-    t.index ["uid", "provider"], name: "index_companies_on_uid_and_provider", unique: true, using: :btree
-  end
-
   create_table "products", force: :cascade do |t|
     t.string   "name"
     t.string   "image_link"
@@ -103,12 +73,6 @@ ActiveRecord::Schema.define(version: 20161027050646) do
     t.integer  "category_id"
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
     t.index ["type_id"], name: "index_products_on_type_id", using: :btree
-  end
-
-  create_table "roles", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "sales", force: :cascade do |t|
