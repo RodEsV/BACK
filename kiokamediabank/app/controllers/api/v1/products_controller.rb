@@ -18,8 +18,8 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def search
-    @search_results = Products.where("name REGEXP ?", '.*' + params[:query] + '.*')
-    respond_with @search_results
+    @search_results = Product.where("name LIKE ?", '%' + params[:query] + '%')
+    render :json => @search_results
   end
 
   # GET /products/new

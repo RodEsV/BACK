@@ -17,7 +17,6 @@ class Api::V1::SalesController < ApplicationController
     if current_member != @user
       render json: {"Status": 401, "Message": "No son tus ventas, marica!"}, status: :unauthorized
     end
-
     respond_with @sales
   end
   # GET /roles/1
@@ -43,7 +42,7 @@ class Api::V1::SalesController < ApplicationController
     end
 
     @sale = Sale.new(price: @cart.compute_price,
-                      user: @cart.user, updated_at: Time.now)
+                      buyer: @cart.cart_owner, updated_at: Time.now)
     @sale.subproducts << @cart.subproducts
     @sale.save
 
@@ -83,7 +82,7 @@ class Api::V1::SalesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_variables
       @user = User.find(params[:user_id])
-      @sales = Sale.find_by(buyer: @user)
+      @sales = Sale.where(buyer: @user)
       @cart = Cart.find_by(cart_owner: @user)
     end
 
